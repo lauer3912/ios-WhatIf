@@ -133,7 +133,7 @@ class ResultViewController: UIViewController {
              UIColor(hex: "#FF6B6B") ?? .red),
             ("💬 Critical Analysis",
              "Critics may argue that our methodology lacks peer review. However, our lead researcher (who has read exactly one Wikipedia article) stands by these findings. The data speaks for itself, and the data says: this would be absolutely legendary.",
-             UIColor(hex: "#4ECDC4") ?? .teal),
+             UIColor(hex: "#4ECDC4") ?? .green),
             ("📚 References",
              "- \"Everything You Know Is Wrong\" (Page, 1987)\n- \"The Journal of Obviously Fake Science\"\n- \"AskAIMaybe.com (Not a reliable source)\n- Personal communication with a rock\n- One (1) dream",
              UIColor(hex: "#8B7FD3") ?? .purple)
