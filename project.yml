@@ -52,6 +52,21 @@ targets:
     dependencies:
       - target: WhatIf
 
+  WhatIfUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: WhatIfUITests
+        type: group
+    settings:
+      base:
+        INFOPLIST_FILE: WhatIfUITests/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.WhatIfUITests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: WhatIf
+    dependencies:
+      - target: WhatIf
+
 schemes:
   WhatIf:
     build:
@@ -63,6 +78,7 @@ schemes:
       config: Debug
       targets:
         - WhatIfTests
+        - WhatIfUITests
     profile:
       config: Release
     analyze:
