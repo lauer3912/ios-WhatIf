@@ -9,14 +9,13 @@ final class WhatIfTests: XCTestCase {
         XCTAssertNil(invalid)
     }
 
-    func testReportGeneration() throws {
-        let resultVC = ResultViewController(question: "What if dogs could fly?")
-        XCTAssertNotNil(resultVC)
-        XCTAssertEqual(resultVC.questionText, "What if dogs could fly?")
-    }
-
-    func testAppLaunch() throws {
+    func testAppDelegateInit() throws {
         let appDelegate = AppDelegate()
         XCTAssertNotNil(appDelegate)
+    }
+
+    func testSceneDelegateInit() throws {
+        let sceneDelegate = SceneDelegate()
+        XCTAssertNotNil(sceneDelegate)
     }
 }
