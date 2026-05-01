@@ -1,18 +1,15 @@
 import UIKit
 
 class ResultViewController: UIViewController {
-
-    private let question: String
+    let questionText: String
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let questionLabel = UILabel()
     private let reportCard = UIView()
     private let shareButton = UIButton(type: .system)
 
-    private let reportSections: [(title: String, content: String)] = []
-
     init(question: String) {
-        self.question = question
+        self.questionText = question
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -34,7 +31,7 @@ class ResultViewController: UIViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
 
-        questionLabel.text = question
+        questionLabel.text = questionText
         questionLabel.font = .systemFont(ofSize: 22, weight: .bold)
         questionLabel.textColor = UIColor(hex: "#FFB347") ?? .orange
         questionLabel.numberOfLines = 0
@@ -91,7 +88,7 @@ class ResultViewController: UIViewController {
     }
 
     private func generateReport() {
-        let reportData = makeReport(for: question)
+        let reportData = makeReport(for: questionText)
         var previousSection: UIView? = nil
         for (index, section) in reportData.enumerated() {
             let sectionView = makeSection(title: section.title, body: section.body, accent: section.accent)
@@ -117,33 +114,30 @@ class ResultViewController: UIViewController {
 
             previousSection = sectionView
         }
-
     }
 
     private func makeReport(for question: String) -> [(title: String, body: String, accent: UIColor)] {
-        let templates: [(title: String, body: String, accent: UIColor)] = [
+        return [
             ("📋 Executive Summary",
-             "After extensive simulation and cross-referencing with obscure academic journals, we conclude that \(question.lowercased()) would fundamentally reshape human civilization as we know it. Our models suggest a 94.7% probability of unintended consequences, primarily involving time paradoxes and existential confusion.",
+             "After extensive simulation, we conclude that \(question.lowercased()) would fundamentally reshape human civilization. Our models suggest a 94.7% probability of unintended consequences.",
              UIColor(hex: "#FFB347") ?? .orange),
             ("🔬 Methodology",
-             "We employed a novel approach combining quantum uncertainty analysis with Bayesian creativity scoring. Control groups consisted of 47 philosophy PhDs, 12 confused cats, and one very confident parrot. Sample size was determined using vibes-based statistics.",
+             "We employed vibes-based statistics and consulted one (1) confused parrot. Sample size determined via vibes.",
              UIColor(hex: "#00D4FF") ?? .cyan),
             ("📊 Key Findings",
-             "1. Economic impact: Estimated 2.3 billion banana-equivalents annually\n2. Social implications: High probability of viral TikTok content\n3. Existential risk: Moderate (Class 2 — \"Interesting but concerning\")\n4. Fun factor: 9.8/10 (scientifically proven)",
+             "1. Fun factor: 9.8/10 (scientifically proven)\n2. Existential risk: Moderate (Class 2)\n3. TikTok potential: Extremely high",
              UIColor(hex: "#FF6B6B") ?? .red),
             ("💬 Critical Analysis",
-             "Critics may argue that our methodology lacks peer review. However, our lead researcher (who has read exactly one Wikipedia article) stands by these findings. The data speaks for itself, and the data says: this would be absolutely legendary.",
+             "Critics may argue our methodology lacks peer review. Our lead researcher stands by these findings. The data speaks for itself.",
              UIColor(hex: "#4ECDC4") ?? .green),
             ("📚 References",
-             "- \"Everything You Know Is Wrong\" (Page, 1987)\n- \"The Journal of Obviously Fake Science\"\n- \"AskAIMaybe.com (Not a reliable source)\n- Personal communication with a rock\n- One (1) dream",
+             "- \"Everything You Know Is Wrong\" (Page, 1987)\n- Personal communication with a rock\n- One (1) dream",
              UIColor(hex: "#8B7FD3") ?? .purple)
         ]
-        return templates
     }
 
     private func makeSection(title: String, body: String, accent: UIColor) -> UIView {
         let container = UIView()
-
         let titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = .systemFont(ofSize: 13, weight: .bold)
@@ -163,18 +157,16 @@ class ResultViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
-
             bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             bodyLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
             bodyLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
             bodyLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -16)
         ])
-
         return container
     }
 
     @objc private func shareResult() {
-        let text = "What if \(question)?\n\nGenerated by What If Machine 🌀"
+        let text = "What if \(questionText)?\n\nGenerated by What If Machine 🌀"
         let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         present(activityVC, animated: true)
     }
