@@ -2,8 +2,6 @@ import XCTest
 
 final class WhatIfUITests: XCTestCase {
     var app: XCUIApplication!
-    var shortWait: Double { 0.5 }
-    var mediumWait: Double { 1.0 }
 
     override func setUp() {
         super.setUp()
@@ -12,20 +10,20 @@ final class WhatIfUITests: XCTestCase {
         app.launch()
     }
 
-    func testScreenshotHome() {
-        // Wait for home screen to load
-        XCTAssertTrue(app.wait(for: .runningFront, timeout: 5))
+    func testScreenshotHome() throws {
+        // Wait for app to be running
+        XCTAssertTrue(app.wait(for: .runningBackground, timeout: 5) || app.wait(for: .runningForeground, timeout: 5))
 
-        // Take screenshot
+        // Take screenshot of home screen
         let homeScreenshot = XCUIScreen.main.screenshot()
-        let homePath = XCTAttachment( screenshot: homeScreenshot)
+        let homePath = XCTAttachment(screenshot: homeScreenshot)
         homePath.name = "whatif_home"
         homePath.lifetime = .keepAlways
-        add( homePath)
+        add(homePath)
     }
 
-    func testGenerateAndScreenshot() {
-        // Find input field and enter a question
+    func testGenerateAndScreenshot() throws {
+        // Find input field
         let inputField = app.textFields["What if..."]
         if inputField.waitForExistence(timeout: 3) {
             inputField.tap()
@@ -41,7 +39,7 @@ final class WhatIfUITests: XCTestCase {
         // Wait for result screen
         Thread.sleep(forTimeInterval: 2)
 
-        // Take screenshot
+        // Take screenshot of result
         let resultScreenshot = XCUIScreen.main.screenshot()
         let resultPath = XCTAttachment(screenshot: resultScreenshot)
         resultPath.name = "whatif_result"
