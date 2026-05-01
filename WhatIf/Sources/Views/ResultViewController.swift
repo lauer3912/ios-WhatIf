@@ -92,28 +92,32 @@ class ResultViewController: UIViewController {
 
     private func generateReport() {
         let reportData = makeReport(for: question)
-        var lastView: UIView = reportCard
-
-        for section in reportData {
+        var previousSection: UIView? = nil
+        for (index, section) in reportData.enumerated() {
             let sectionView = makeSection(title: section.title, body: section.body, accent: section.accent)
             sectionView.translatesAutoresizingMaskIntoConstraints = false
             reportCard.addSubview(sectionView)
 
+            let isLast = (index == reportData.count - 1)
+
             NSLayoutConstraint.activate([
-                sectionView.topAnchor.constraint(equalTo: lastView.topAnchor, constant: section === reportData.first ? 20 : 12),
                 sectionView.leadingAnchor.constraint(equalTo: reportCard.leadingAnchor, constant: 20),
                 sectionView.trailingAnchor.constraint(equalTo: reportCard.trailingAnchor, constant: -20),
-                sectionView.bottomAnchor.constraint(equalTo: lastView.bottomAnchor, constant: section === reportData.last ? -20 : 0)
             ])
-            lastView = sectionView
+
+            if let prev = previousSection {
+                sectionView.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: 12).isActive = true
+            } else {
+                sectionView.topAnchor.constraint(equalTo: reportCard.topAnchor, constant: 20).isActive = true
+            }
+
+            if isLast {
+                sectionView.bottomAnchor.constraint(equalTo: reportCard.bottomAnchor, constant: -20).isActive = true
+            }
+
+            previousSection = sectionView
         }
 
-        // Update reportCard bottom constraint
-        for constraint in reportCard.constraints {
-            if constraint.firstAttribute == .height {
-                constraint.isActive = false
-            }
-        }
     }
 
     private func makeReport(for question: String) -> [(title: String, body: String, accent: UIColor)] {
